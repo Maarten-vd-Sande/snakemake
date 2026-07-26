@@ -790,9 +790,7 @@ class Workflow(WorkflowExecutorInterface):
 
             def files(items):
                 relpath = lambda f: (
-                    f
-                    if os.path.isabs(f) or f.startswith("root://")
-                    else os.path.relpath(f)
+                    f if os.path.isabs(f) or not is_local_file(f) else os.path.relpath(f)
                 )
                 return map(
                     self.modifier.path_modifier.apply_default_storage,
